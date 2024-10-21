@@ -8,7 +8,6 @@
         body {
             background-color: black;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -51,45 +50,15 @@
                 transform: translateY(100vh) rotate(360deg);
             }
         }
-        .music-button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: white;
-            border: none;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .music-button:hover {
-            background-color: gray;
-        }
     </style>
 </head>
 <body>
     <div class="typewriter">shhhhh... i'm long gone.</div>
-    
-    <button class="music-button" id="musicButton">Play Music</button>
-    
-    <audio id="bgMusic" loop>
+    <audio id="bgMusic" autoplay loop>
         <source src="Summer Days - (feat. staxxcy) PROD. @caster.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
-
     <script>
-        const bgMusic = document.getElementById('bgMusic');
-        const musicButton = document.getElementById('musicButton');
-        let isPlaying = false;
-
-        musicButton.addEventListener('click', () => {
-            if (isPlaying) {
-                bgMusic.pause();
-                musicButton.textContent = 'Play Music';
-            } else {
-                bgMusic.play();
-                musicButton.textContent = 'Pause Music';
-            }
-            isPlaying = !isPlaying;
-        });
-
         function createPetal() {
             const petal = document.createElement('div');
             petal.classList.add('petal');
@@ -106,6 +75,12 @@
         }
 
         setInterval(createPetal, 300);
+    </script>
+    <script>
+        const bgMusic = document.getElementById('bgMusic');
+        window.addEventListener('click', () => {
+            bgMusic.play();
+        });
     </script>
 </body>
 </html>

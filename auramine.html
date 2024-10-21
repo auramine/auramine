@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Website with Falling Petals and Music</title>
+    <style>
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+        }
+        .typewriter {
+            color: white;
+            font-size: 24px;
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .15em;
+            border-right: .15em solid white;
+            width: 32ch;
+            animation: 
+                typing 3.5s steps(32, end) forwards,
+                blink-caret .75s step-end infinite;
+            z-index: 1;
+        }
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 32ch }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: white; }
+        }
+        .petal {
+            position: absolute;
+            background-color: pink;
+            border-radius: 50%;
+            opacity: 0.7;
+            top: -10px;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+        #playButton {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            cursor: pointer;
+            z-index: 2;
+            transition: opacity 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <div class="typewriter">shhhhh... i'm long gone.</div>
+    <button id="playButton">Play Music</button>
+    <audio id="bgMusic" loop>
+        <source src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Sad_Piano_%28uploaded_by_Maggot_Cheese_Fungus%29.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+    <script>
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.width = Math.random() * 10 + 5 + 'px';
+            petal.style.height = petal.style.width;
+            const duration = Math.random() * 3 + 5; // 5-8 seconds duration
+            petal.style.animationDuration = duration + 's';
+            document.body.appendChild(petal);
+
+            setTimeout(() => {
+                petal.remove();
+            }, duration * 1000);
+        }
+
+        setInterval(createPetal, 300);
+
+        const playButton = document.getElementById('playButton');
+        const bgMusic = document.getElementById('bgMusic');
+
+        playButton.addEventListener('click', () => {
+            bgMusic.play();
+            playButton.style.opacity = '0';
+            setTimeout(() => {
+                playButton.style.display = 'none';
+            }, 500);
+        });
+    </script>
+</body>
+</html>
